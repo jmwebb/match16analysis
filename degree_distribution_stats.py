@@ -13,13 +13,19 @@ import collections # counter
 
 def in_degree_distribution(graph):
 	in_degrees = collections.Counter()
-	high_degree = []
 	for node in graph.nodes(data=True):
 		in_degrees[graph.in_degree(node[0])] += 1
-		if graph.in_degree(node[0]) > 10:
-			high_degree.append((node[1]['gender'], graph.in_degree(node[0]), node[1]))
 
-	high_degree = sorted(high_degree, key=lambda x:x[1])
-	print(high_degree)
+	in_degrees = sorted(in_degrees.items(), key=lambda x:x[0])
+
+	print(in_degrees)
+
+def in_degree_distribution_females(graph):
+	in_degrees = collections.Counter()
+	for node in graph.nodes(data=True):
+		if node[1]['gender'] == 'Female':
+			in_degrees[graph.in_degree(node[0])] += 1
+
+	in_degrees = sorted(in_degrees.items(), key=lambda x:x[0])
 
 	print(in_degrees)

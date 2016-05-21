@@ -10,6 +10,19 @@ Lightweight utility library to work with Match16 data.
 import json
 import networkx as nx
 
+def load_nodes_and_edges(json_filename, json_attribute_filename):
+    """
+    Easy to use wrapper for two json loading functions. Produces
+    a networkx graph with detailed nodes.
+
+    @param json_filename: json file containing edge list
+    @param json_attribute_filename: json file containing node attributes
+    @return networkx graph
+    """
+    g = json_to_graph(json_filename)
+    add_node_attributes(json_attribute_filename, g)
+    return g
+
 
 def json_to_graph(json_filename):
     """
@@ -96,3 +109,10 @@ def filter(graph, node_filters=[], edge_filters=[]):
         if filtered_graph.in_degree(node) == 0 and filtered_graph.out_degree(node) == 0:
             filtered_graph.remove_node(node)
     return filtered_graph
+
+def is_male(graph, node_id, attributes):
+    return attributes['gender'] == 'Male'
+
+def is_female(graph, node_id, attributes):
+    return attributes['gender'] == 'Female'
+
