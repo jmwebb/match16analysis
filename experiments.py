@@ -9,7 +9,7 @@ Primary file that will run all experiments on Match16 data and print results.
 
 import graphutils as gu
 import networkx as nx
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 
 EDGE_FILE = 'final_match16_matches.json'
 NODE_FILE = 'all_nodes_final.json'
@@ -33,4 +33,4 @@ if __name__ == "__main__":
     gu.add_node_attributes(NODE_FILE, match16_graph)
     print('Node attributes added!')
     degree_distribution_experiments(match16_graph)
-    calculate_node_percentages
+    basic_stats(match16_graph)
