@@ -66,6 +66,7 @@ def create_data_matrix(graph):
     Creates a matrix from the given graph where each row is
     the feature vector for a given edge, and the output is
     whether or not that edge is reciprocated (i.e. a match).
+    
     @param graph: the graph to turn into a matrix
     return a tuple of the outputs and data matrix
     """

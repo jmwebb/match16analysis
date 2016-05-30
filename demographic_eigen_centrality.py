@@ -5,7 +5,7 @@ File: demographic_eigen_centrality.py
 @date 2016-05-19
 
 Experiment to determine which demographic groups have the
-highest average eigenvector centrality.
+highest average/median eigenvector centrality.
 """
 
 import networkx as nx
@@ -13,12 +13,22 @@ import math
 
 
 def _map_print(key, value):
+    """
+    Pretty print feature for key-value pairs
+    """
     print(
         '\t{0:11.11}:\t{1}\t'.format(
             key, value))
 
 
 def _print_average_demo(eigenvec_centrality_totals):
+    """
+    Calculates and prints the average eigenvector centrality
+    for a given demographic group.
+
+    @param eigenvec_centrality_totals: a dict mapping a demographic to
+        a list of the eigenvector centrality for all nodes in that demographic
+    """
     averages = {}
     print('-' * 60)
     for attribute in eigenvec_centrality_totals:
@@ -31,6 +41,13 @@ def _print_average_demo(eigenvec_centrality_totals):
 
 
 def _print_median_demo(eigenvec_centrality_totals):
+    """
+    Calculates and prints the average eigenvector centrality
+    for a given demographic group.
+
+    @param eigenvec_centrality_totals: a dict mapping a demographic to
+        a list of the eigenvector centrality for all nodes in that demographic
+    """
     medians = {}
     print('-' * 60)
     for attribute in eigenvec_centrality_totals:
@@ -42,6 +59,16 @@ def _print_median_demo(eigenvec_centrality_totals):
 
 
 def _calc_centrality_totals(graph):
+    """
+    Calculates the eigenvector centrality for every node in
+    a graph, then assigns those centralities to different
+    demographic groups.
+
+    @param graph: the graph to calculate centrality for
+    @return a dict mapping gender string to list of centralities
+    @return a dict mapping major name to list of centralities
+    @return a dict mapping activity name to list of centralities
+    """
     eigen_centralities = nx.eigenvector_centrality(graph)
     gender_eigen_totals = {}
     major_eigen_totals = {}
@@ -68,6 +95,10 @@ def _calc_centrality_totals(graph):
 
 
 def average_centralities(graph):
+    """
+    Finds the average eigenvector centrality across all demographic groups
+    in the provided graph.
+    """
     gender_eigen_totals, major_eigen_totals, ec_eigen_totals = _calc_centrality_totals(
         graph)
 
@@ -82,6 +113,10 @@ def average_centralities(graph):
 
 
 def median_centralities(graph):
+    """
+    Finds the median eigenvector centrality across all demographic groups
+    in the provided graph.
+    """
     gender_eigen_totals, major_eigen_totals, ec_eigen_totals = _calc_centrality_totals(
         graph)
 
