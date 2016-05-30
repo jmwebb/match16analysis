@@ -118,6 +118,15 @@ def print_graph(graph):
 
 
 def filter(graph, node_filters=[], edge_filters=[]):
+    """
+    Creates a new graph representing only the nodes and
+    edges that passed the given filter functions.
+
+    @param graph: graph to filter
+    @param node_filters: filters to be applied to the graph nodes
+    @param edge_filters: filters to be applies to the graph edges
+    @return the filtered graph
+    """
     filtered_graph = nx.DiGraph(graph)
     for predicate in node_filters:
         for node in filtered_graph.nodes(data=True)[:]:
@@ -134,9 +143,51 @@ def filter(graph, node_filters=[], edge_filters=[]):
     return filtered_graph
 
 
+def count_shared_activities(graph, creator_id, recipient_id, attributes):
+    """
+    Counts the activities shared by the two nodes of an edge.
+
+    @param graph: the graph the edge belongs to
+    @param creator_id: the id of the first node of the edge
+    @param recipient_id: the id of the second node of the edge
+    @param attributes: dictionary of edge attributes
+    return the number of activities in common
+    """
+    return len(set(graph.node[creator_id]['extra_curricular']).intersection(
+        set(graph.node[recipient_id]['extra_curricular'])))
+
+
+#####################################################
+#                                                   #
+#         Useful filters for edges/nodes            #
+#                                                   #
+#####################################################
+
 def is_male(graph, node_id, attributes):
     return attributes['gender'] == 'Male'
 
 
 def is_female(graph, node_id, attributes):
     return attributes['gender'] == 'Female'
+
+
+def is_romantic(graph, creator_id, recipient_id, attributes):
+    return attributes['purpose'] == 'Romance'
+
+
+def did_participate(graph, node_id, attributes):
+    return attributes['gender'] != 'No Data'
+
+
+def is_reciprocated(graph, creator_id, recipient_id, attributes):
+    return creator_id in graph.successors(recipient_id)
+
+
+def is_same_gender(graph, creator_id, recipient_id, attributes):
+    return graph.node[creator_id][
+        'gender'] == graph.node[recipient_id]['gender']
+
+
+def is_same_major(graph, creator_id, recipient_id, attributes):
+    return graph.node[creator_id]['area_of_study'] == graph.node[
+        recipient_id]['area_of_study']
